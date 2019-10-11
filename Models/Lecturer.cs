@@ -8,6 +8,5 @@ namespace Models
     public class Lecturer
     {
         public string Name { get; set; }
-        public List<Event> Events { get; set; }
     }
 }
