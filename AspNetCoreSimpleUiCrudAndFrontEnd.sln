@@ -5,6 +5,14 @@ VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreSimpleUiCrudAndFrontEnd", "AspNetCoreSimpleUiCrudAndFrontEnd\AspNetCoreSimpleUiCrudAndFrontEnd.csproj", "{FFF812A1-35F0-4DD8-82DE-4B06A060AB36}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{D6DAF9BE-D019-4FB9-89AC-C9F5CBCF2426}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{3468D75F-65EC-46B1-B80F-FBCD16D28B2A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{8662FFE9-4640-4EA9-A5FD-05C88540DB13}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{629A7DA3-538A-4FDD-950B-19594880BB92}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,6 +26,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FFF812A1-35F0-4DD8-82DE-4B06A060AB36} = {D6DAF9BE-D019-4FB9-89AC-C9F5CBCF2426}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B0D2B5CB-0E04-4255-9DBE-10B37E47C923}
