@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AspNetCoreSimpleUiCrudAndFrontEnd.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Models;
 
 namespace AspNetCoreSimpleUiCrudAndFrontEnd.Controllers
 {
