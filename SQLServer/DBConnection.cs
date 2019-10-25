@@ -12,6 +12,6 @@ namespace SQLServer
         public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlServer(@"Server=.;Database=AspNetCoreSimpleUiCrudAndFrontEnd;Trusted_Connection=True;");
+            => options.UseSqlServer(@"Server=DESKTOP-L8NHATC\SQLEXPRESS;Database=AspNetCoreSimpleUiCrudAndFrontEnd;Trusted_Connection=True;");
     }
 }

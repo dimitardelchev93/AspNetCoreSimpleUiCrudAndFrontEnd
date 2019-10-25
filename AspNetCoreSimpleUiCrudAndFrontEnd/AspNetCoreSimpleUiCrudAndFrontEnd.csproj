@@ -16,6 +16,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj" />
+    <ProjectReference Include="..\SQLite\SQLite.csproj" />
+    <ProjectReference Include="..\SQLServer\SQLServer.csproj" />
   </ItemGroup>
 
 </Project>
