@@ -7,6 +7,7 @@ namespace Models
 {
     public class Event
     {
+        public int Id { get; set; }
         public string Topic { get; set; }
         public Lecturer Lecturer { get; set; }
         public Location Location { get; set; }
