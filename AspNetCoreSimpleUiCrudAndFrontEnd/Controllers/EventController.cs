@@ -14,13 +14,12 @@ namespace AspNetCoreSimpleUiCrudAndFrontEnd.Controllers
         // GET: Event
         public ActionResult Index()
         {
-            List<Event> events = new List<Event>
+            using (var context = new SQLite.DBConnection())
             {
-                new Event { Topic = "Test topic", Lecturer = new Lecturer { Name = "Test name" }, Location = new Location { City = "Sofia", Street = "Street 1", StreetNumber = "1", PostalCode = "4000" }, StartTime = DateTime.Now.AddDays(5) },
-                new Event { Topic = "Test topic 2", Lecturer = new Lecturer { Name = "Test name 2" }, Location = new Location { City = "Sofia 2", Street = "Street 2", StreetNumber = "2", PostalCode = "4002" }, StartTime = DateTime.Now.AddDays(7) },
-            };
+                List<Event> events = context.Events.ToList();
 
-            return View(events);
+                return View(events);
+            }
         }
 
         // GET: Event/Details/5

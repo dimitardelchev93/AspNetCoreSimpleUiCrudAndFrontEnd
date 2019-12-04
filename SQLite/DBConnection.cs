@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Models;
 using System;
+using System.IO;
 
 namespace SQLite
 {
@@ -11,8 +12,14 @@ namespace SQLite
         public DbSet<Location> Locations { get; set; }
         public DbSet<User> Users { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlite("Data Source=main.db");
+        protected override void OnConfiguring(DbContextOptionsBuilder options) {
+            var sqlitePath = Path.Combine(
+                Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()),
+                @"SQLite\main.db"
+            );
+
+            options.UseSqlite("Data Source=" + sqlitePath);
+        }
     }
 }
 
