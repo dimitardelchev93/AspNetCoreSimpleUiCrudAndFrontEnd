@@ -25,8 +25,8 @@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Locations)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Locations.LecturerId)
+        <dd class="col-sm-10">
+            @Html.Label(string.Format("{0}, {1} {2}, {3}", Model.Locations.City, Model.Locations.Street, Model.Locations.StreetNumber, Model.Locations.PostalCode))
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.StartTime)

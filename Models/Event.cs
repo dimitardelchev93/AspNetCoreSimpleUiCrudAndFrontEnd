@@ -19,7 +19,7 @@ namespace Models
         [Display(Name = "Location")]
         public int LocationId { get; set; }
         [ForeignKey("LocationId")]
-        public virtual Lecturer Locations { get; set; }
+        public virtual Location Locations { get; set; }
         public DateTime StartTime { get; set; }
     }
 }

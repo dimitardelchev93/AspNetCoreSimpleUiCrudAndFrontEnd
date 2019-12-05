@@ -49,8 +49,9 @@ namespace AspNetCoreSimpleUiCrudAndFrontEnd.Controllers
         // GET: Events/Create
         public IActionResult Create()
         {
-            ViewData["LecturerId"] = new SelectList(_context.Lecturers, "LecturerId", "LecturerId");
-            ViewData["LocationId"] = new SelectList(_context.Lecturers, "LecturerId", "LecturerId");
+            ViewData["LecturerId"] = new SelectList(_context.Lecturers, "LecturerId", "Name");
+            ViewData["LocationId"] = getLocationsSelect(0);
+
             return View();
         }
 
@@ -67,8 +68,8 @@ namespace AspNetCoreSimpleUiCrudAndFrontEnd.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LecturerId"] = new SelectList(_context.Lecturers, "LecturerId", "LecturerId", @event.LecturerId);
-            ViewData["LocationId"] = new SelectList(_context.Lecturers, "LecturerId", "LecturerId", @event.LocationId);
+            ViewData["LecturerId"] = new SelectList(_context.Lecturers, "LecturerId", "Name", @event.LecturerId);
+            ViewData["LocationId"] = getLocationsSelect(@event.LocationId);
             return View(@event);
         }
 
@@ -85,8 +86,8 @@ namespace AspNetCoreSimpleUiCrudAndFrontEnd.Controllers
             {
                 return NotFound();
             }
-            ViewData["LecturerId"] = new SelectList(_context.Lecturers, "LecturerId", "LecturerId", @event.LecturerId);
-            ViewData["LocationId"] = new SelectList(_context.Lecturers, "LecturerId", "LecturerId", @event.LocationId);
+            ViewData["LecturerId"] = new SelectList(_context.Lecturers, "LecturerId", "Name", @event.LecturerId);
+            ViewData["LocationId"] = getLocationsSelect(@event.LocationId);
             return View(@event);
         }
 
@@ -122,8 +123,8 @@ namespace AspNetCoreSimpleUiCrudAndFrontEnd.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LecturerId"] = new SelectList(_context.Lecturers, "LecturerId", "LecturerId", @event.LecturerId);
-            ViewData["LocationId"] = new SelectList(_context.Lecturers, "LecturerId", "LecturerId", @event.LocationId);
+            ViewData["LecturerId"] = new SelectList(_context.Lecturers, "LecturerId", "Name", @event.LecturerId);
+            ViewData["LocationId"] = getLocationsSelect(@event.LocationId);
             return View(@event);
         }
 
@@ -161,6 +162,21 @@ namespace AspNetCoreSimpleUiCrudAndFrontEnd.Controllers
         private bool EventExists(int id)
         {
             return _context.Events.Any(e => e.EventId == id);
+        }
+
+        private SelectList getLocationsSelect(int i)
+        {
+            var locations = _context.Locations.ToList();
+
+            IEnumerable<SelectListItem> selectList =
+                from l in locations
+                select new SelectListItem
+                {
+                    Value = l.LocationId.ToString(),
+                    Text = l.City + ", " + l.Street + " " + l.StreetNumber + ", " + l.PostalCode
+                };
+
+            return new SelectList(selectList, "Value", "Text", i);
         }
     }
 }
