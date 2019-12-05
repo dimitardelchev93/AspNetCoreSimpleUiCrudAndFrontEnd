@@ -85,23 +85,6 @@ namespace SQLite.Migrations
                     b.ToTable("Locations");
                 });
 
-            modelBuilder.Entity("Models.User", b =>
-                {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("UserId");
-
-                    b.ToTable("Users");
-                });
-
             modelBuilder.Entity("Models.Event", b =>
                 {
                     b.HasOne("Models.Lecturer", "Lecturers")
@@ -110,7 +93,7 @@ namespace SQLite.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Models.Lecturer", "Locations")
+                    b.HasOne("Models.Location", "Locations")
                         .WithMany()
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
