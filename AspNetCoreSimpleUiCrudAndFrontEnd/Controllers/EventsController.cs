@@ -22,7 +22,8 @@ namespace AspNetCoreSimpleUiCrudAndFrontEnd.Controllers
         // GET: Events
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Events.ToListAsync());
+            var dBConnection = _context.Events.Include(x => x.Lecturers).Include(x => x.Locations);
+            return View(await dBConnection.ToListAsync());
         }
 
         // GET: Events/Details/5
@@ -34,7 +35,9 @@ namespace AspNetCoreSimpleUiCrudAndFrontEnd.Controllers
             }
 
             var @event = await _context.Events
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .Include(x => x.Lecturers)
+                .Include(x => x.Locations)
+                .FirstOrDefaultAsync(m => m.EventId == id);
             if (@event == null)
             {
                 return NotFound();
@@ -46,6 +49,8 @@ namespace AspNetCoreSimpleUiCrudAndFrontEnd.Controllers
         // GET: Events/Create
         public IActionResult Create()
         {
+            ViewData["LecturerId"] = new SelectList(_context.Lecturers, "LecturerId", "LecturerId");
+            ViewData["LocationId"] = new SelectList(_context.Lecturers, "LecturerId", "LecturerId");
             return View();
         }
 
@@ -54,7 +59,7 @@ namespace AspNetCoreSimpleUiCrudAndFrontEnd.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Topic,StartTime")] Event @event)
+        public async Task<IActionResult> Create([Bind("EventId,Topic,LecturerId,LocationId,StartTime")] Event @event)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +67,8 @@ namespace AspNetCoreSimpleUiCrudAndFrontEnd.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["LecturerId"] = new SelectList(_context.Lecturers, "LecturerId", "LecturerId", @event.LecturerId);
+            ViewData["LocationId"] = new SelectList(_context.Lecturers, "LecturerId", "LecturerId", @event.LocationId);
             return View(@event);
         }
 
@@ -78,6 +85,8 @@ namespace AspNetCoreSimpleUiCrudAndFrontEnd.Controllers
             {
                 return NotFound();
             }
+            ViewData["LecturerId"] = new SelectList(_context.Lecturers, "LecturerId", "LecturerId", @event.LecturerId);
+            ViewData["LocationId"] = new SelectList(_context.Lecturers, "LecturerId", "LecturerId", @event.LocationId);
             return View(@event);
         }
 
@@ -86,9 +95,9 @@ namespace AspNetCoreSimpleUiCrudAndFrontEnd.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Topic,StartTime")] Event @event)
+        public async Task<IActionResult> Edit(int id, [Bind("EventId,Topic,LecturerId,LocationId,StartTime")] Event @event)
         {
-            if (id != @event.Id)
+            if (id != @event.EventId)
             {
                 return NotFound();
             }
@@ -102,7 +111,7 @@ namespace AspNetCoreSimpleUiCrudAndFrontEnd.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EventExists(@event.Id))
+                    if (!EventExists(@event.EventId))
                     {
                         return NotFound();
                     }
@@ -113,6 +122,8 @@ namespace AspNetCoreSimpleUiCrudAndFrontEnd.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["LecturerId"] = new SelectList(_context.Lecturers, "LecturerId", "LecturerId", @event.LecturerId);
+            ViewData["LocationId"] = new SelectList(_context.Lecturers, "LecturerId", "LecturerId", @event.LocationId);
             return View(@event);
         }
 
@@ -125,7 +136,9 @@ namespace AspNetCoreSimpleUiCrudAndFrontEnd.Controllers
             }
 
             var @event = await _context.Events
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .Include(x => x.Lecturers)
+                .Include(x => x.Locations)
+                .FirstOrDefaultAsync(m => m.EventId == id);
             if (@event == null)
             {
                 return NotFound();
@@ -147,7 +160,7 @@ namespace AspNetCoreSimpleUiCrudAndFrontEnd.Controllers
 
         private bool EventExists(int id)
         {
-            return _context.Events.Any(e => e.Id == id);
+            return _context.Events.Any(e => e.EventId == id);
         }
     }
 }

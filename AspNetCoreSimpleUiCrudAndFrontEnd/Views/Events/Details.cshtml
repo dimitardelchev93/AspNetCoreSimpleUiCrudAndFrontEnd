@@ -17,6 +17,18 @@
             @Html.DisplayFor(model => model.Topic)
         </dd>
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Lecturers)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Lecturers.LecturerId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Locations)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Locations.LecturerId)
+        </dd>
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.StartTime)
         </dt>
         <dd class = "col-sm-10">
@@ -25,6 +37,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.EventId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

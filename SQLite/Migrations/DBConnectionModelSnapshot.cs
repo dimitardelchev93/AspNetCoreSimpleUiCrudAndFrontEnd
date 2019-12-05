@@ -18,14 +18,17 @@ namespace SQLite.Migrations
 
             modelBuilder.Entity("Models.Event", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("EventId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("LecturerId")
+                    b.Property<int>("LecturerId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("LocationId")
+                    b.Property<int>("LocationId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("LocationId1")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("StartTime")
@@ -34,32 +37,34 @@ namespace SQLite.Migrations
                     b.Property<string>("Topic")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("EventId");
 
                     b.HasIndex("LecturerId");
 
                     b.HasIndex("LocationId");
+
+                    b.HasIndex("LocationId1");
 
                     b.ToTable("Events");
                 });
 
             modelBuilder.Entity("Models.Lecturer", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("LecturerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("LecturerId");
 
                     b.ToTable("Lecturers");
                 });
 
             modelBuilder.Entity("Models.Location", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("LocationId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -75,14 +80,14 @@ namespace SQLite.Migrations
                     b.Property<string>("StreetNumber")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("LocationId");
 
                     b.ToTable("Locations");
                 });
 
             modelBuilder.Entity("Models.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -92,20 +97,28 @@ namespace SQLite.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
                     b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Models.Event", b =>
                 {
-                    b.HasOne("Models.Lecturer", "Lecturer")
+                    b.HasOne("Models.Lecturer", "Lecturers")
                         .WithMany()
-                        .HasForeignKey("LecturerId");
+                        .HasForeignKey("LecturerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Models.Lecturer", "Locations")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Models.Location", "Location")
                         .WithMany()
-                        .HasForeignKey("LocationId");
+                        .HasForeignKey("LocationId1");
                 });
 #pragma warning restore 612, 618
         }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SQLite.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class CreateInitial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,20 +11,20 @@ namespace SQLite.Migrations
                 name: "Lecturers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    LecturerId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Lecturers", x => x.Id);
+                    table.PrimaryKey("PK_Lecturers", x => x.LecturerId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Locations",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    LocationId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     City = table.Column<string>(nullable: true),
                     Street = table.Column<string>(nullable: true),
@@ -33,48 +33,55 @@ namespace SQLite.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Locations", x => x.Id);
+                    table.PrimaryKey("PK_Locations", x => x.LocationId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    UserId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.UserId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Events",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    EventId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Topic = table.Column<string>(nullable: true),
-                    LecturerId = table.Column<int>(nullable: true),
-                    LocationId = table.Column<int>(nullable: true),
+                    LecturerId = table.Column<int>(nullable: false),
+                    LocationId1 = table.Column<int>(nullable: true),
+                    LocationId = table.Column<int>(nullable: false),
                     StartTime = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Events", x => x.Id);
+                    table.PrimaryKey("PK_Events", x => x.EventId);
                     table.ForeignKey(
                         name: "FK_Events_Lecturers_LecturerId",
                         column: x => x.LecturerId,
                         principalTable: "Lecturers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "LecturerId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Events_Locations_LocationId",
+                        name: "FK_Events_Lecturers_LocationId",
                         column: x => x.LocationId,
+                        principalTable: "Lecturers",
+                        principalColumn: "LecturerId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Events_Locations_LocationId1",
+                        column: x => x.LocationId1,
                         principalTable: "Locations",
-                        principalColumn: "Id",
+                        principalColumn: "LocationId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -87,6 +94,11 @@ namespace SQLite.Migrations
                 name: "IX_Events_LocationId",
                 table: "Events",
                 column: "LocationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Events_LocationId1",
+                table: "Events",
+                column: "LocationId1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
